@@ -53,7 +53,7 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Producto> buscar(@PathVariable Long id) {
+    public ResponseEntity<Producto> buscar(@PathVariable Integer id) {
         try {
             Producto producto = productoService.findById(id);
 
@@ -71,6 +71,8 @@ public class ProductoController {
 
     // Buscar productos cuyo nombre contenga cierta palabra (insensible a
     // mayúsculas)
+    // Para buscar necesitamos http://localhost:8080/api/v1/productos/buscar-por-nombre?nombre=leche
+
     @GetMapping("/buscar-por-nombre")
     public ResponseEntity<List<Producto>> buscarPorNombre(
             @org.springframework.web.bind.annotation.RequestParam String nombre) {
@@ -134,7 +136,7 @@ public class ProductoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Producto> actualizar(@PathVariable Long id, @RequestBody Producto producto) {
+    public ResponseEntity<Producto> actualizar(@PathVariable Integer id, @RequestBody Producto producto) {
         try {
             Producto productoYaExistente = productoService.findById(id);
             if (productoYaExistente == null) {
@@ -156,7 +158,7 @@ public class ProductoController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Producto> patchProducto(@PathVariable Long id, @RequestBody Producto partialProducto) {
+    public ResponseEntity<Producto> patchProducto(@PathVariable Integer id, @RequestBody Producto partialProducto) {
         try {
             Producto updatedProducto = productoService.patchProducto(id, partialProducto);
 
@@ -174,7 +176,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(@PathVariable Long id) {
+    public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         try {
             productoService.delete(id);
             return ResponseEntity.noContent().build();
