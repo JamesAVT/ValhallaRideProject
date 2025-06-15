@@ -48,6 +48,13 @@ public class OrdenController {
         return ResponseEntity.ok(guardada);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Orden> actualizar(@PathVariable Integer id, @RequestBody Orden ordenActualizada) {
+        Orden orden = ordenService.update(id, ordenActualizada);
+        return (orden != null) ? ResponseEntity.ok(orden) : ResponseEntity.notFound().build();
+    }
+
+
     @PatchMapping("/{id}/pagado")
     public ResponseEntity<Orden> actualizarEstadoPago(@PathVariable Integer id, @RequestParam Boolean pagado) {
         Orden actualizada = ordenService.actualizarEstadoPago(id, pagado);
