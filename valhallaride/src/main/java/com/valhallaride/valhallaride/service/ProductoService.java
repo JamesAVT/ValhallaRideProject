@@ -22,7 +22,7 @@ public class ProductoService {
         return productoRepository.findAll();
     }
 
-    public Producto findById(Long id) {
+    public Producto findById(Integer id) {
         return productoRepository.findById(id).orElse(null);
     }
 
@@ -30,11 +30,11 @@ public class ProductoService {
         return productoRepository.save(producto);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         productoRepository.deleteById(id);
     }
 
-    public Producto updateProducto(Long id, Producto producto) {
+    public Producto updateProducto(Integer id, Producto producto) {
         Producto productoToUpdate = productoRepository.findById(id).orElse(null);
         if (productoToUpdate != null) {
             productoToUpdate.setNombreProducto(producto.getNombreProducto());
@@ -47,7 +47,7 @@ public class ProductoService {
         }
     }
 
-    public Producto patchProducto(Long id, Producto parcialProducto) {
+    public Producto patchProducto(Integer id, Producto parcialProducto) {
         Optional<Producto> productoOptional = productoRepository.findById(id);
         if (productoOptional.isPresent()) {
 
