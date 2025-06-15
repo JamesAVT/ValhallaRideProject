@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -40,6 +41,20 @@ public class OrdenService {
             orden.setPagado(false);
         }
         return ordenRepository.save(orden);
+    }
+
+    public Orden update(Integer id, Orden ordenActualizada) {
+        Optional<Orden> optionalOrden = ordenRepository.findById(id);
+        if (optionalOrden.isPresent()) {
+            Orden ordenExistente = optionalOrden.get();
+            ordenExistente.setFecha(ordenActualizada.getFecha());
+            ordenExistente.setPagado(ordenActualizada.getPagado());
+            ordenExistente.setUsuario(ordenActualizada.getUsuario());
+            ordenExistente.setMetodopago(ordenActualizada.getMetodopago());
+
+            return ordenRepository.save(ordenExistente);
+        }
+        return null;
     }
 
     public Orden actualizarEstadoPago(Integer id, Boolean pagado) {
