@@ -36,7 +36,7 @@ public class Orden {
     @JsonManagedReference
     private List<ProductoOrden> productosOrden;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_met_pago", nullable = false)
     private MetodoPago metodopago;
 }
