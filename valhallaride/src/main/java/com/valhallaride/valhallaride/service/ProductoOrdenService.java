@@ -1,5 +1,6 @@
 package com.valhallaride.valhallaride.service;
 
+import com.valhallaride.valhallaride.model.Producto;
 import com.valhallaride.valhallaride.model.ProductoOrden;
 import com.valhallaride.valhallaride.repository.OrdenRepository;
 import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
@@ -34,8 +35,21 @@ public class ProductoOrdenService {
 
         // Aquí cargamos el producto completo desde la base de datos
         if (productoOrden.getProducto() != null && productoOrden.getProducto().getIdProducto() != null) {
-            productoOrden.setProducto(productoRepository.findById(
-                    productoOrden.getProducto().getIdProducto()).orElse(null));
+            Producto producto = productoRepository.findById(
+                    productoOrden.getProducto().getIdProducto()).orElse(null);
+            
+            if (producto != null) {
+                productoOrden.setProducto(producto);
+
+                // Aqui calculamos el precio total (cantidad * precio unitario del producto)
+                Integer cantidad = productoOrden.getCantidad();
+                Integer precioUnitario = producto.getPrecioProducto();
+
+                if (cantidad != null && precioUnitario != null) {
+                    Integer precioFinal = cantidad * precioUnitario;
+                    productoOrden.setPrecioProducto(precioFinal);
+                }
+            }
         }
 
         // Aquí cargamos la orden completa
@@ -47,8 +61,7 @@ public class ProductoOrdenService {
 
         return productoOrdenRepository.save(productoOrden);
     }
-
-
+    
 
     public List<ProductoOrden> findAll() {
         return productoOrdenRepository.findAll();
