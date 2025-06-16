@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -66,6 +68,52 @@ public class ProductoOrdenController {
     public ResponseEntity<ProductoOrden> registrar(@RequestBody ProductoOrden productoOrden) {
         ProductoOrden guardado = productoOrdenService.save(productoOrden);
         return ResponseEntity.ok(guardado);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductoOrden> actualizar(@PathVariable Integer id, @RequestBody ProductoOrden productoOrden) {
+        ProductoOrden existente = productoOrdenService.findById(id);
+        if (existente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        existente.setCantidad(productoOrden.getCantidad());
+        existente.setFechaHora(productoOrden.getFechaHora());
+        existente.setOrden(productoOrden.getOrden());
+        existente.setPrecioProducto(productoOrden.getPrecioProducto());
+        existente.setProducto(productoOrden.getProducto());
+
+        ProductoOrden actualizado = productoOrdenService.save(existente);
+        return ResponseEntity.ok(actualizado);
+        
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductoOrden> patchProductoOrden(@PathVariable Integer id, @RequestBody ProductoOrden partialProductoOrden) {
+        ProductoOrden existente = productoOrdenService.findById(id);
+        if (existente == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Chicos, esto actualiza solo si el campo enviado NO es null!!
+        if (partialProductoOrden.getCantidad() != null) {
+            existente.setCantidad(partialProductoOrden.getCantidad());
+        }
+        if (partialProductoOrden.getFechaHora() != null) {
+            existente.setFechaHora(partialProductoOrden.getFechaHora());
+        }
+        if (partialProductoOrden.getOrden() != null) {
+            existente.setOrden(partialProductoOrden.getOrden());
+        }
+        if (partialProductoOrden.getPrecioProducto() != null) {
+            existente.setPrecioProducto(partialProductoOrden.getPrecioProducto());
+        }
+        if (partialProductoOrden.getProducto() != null) {
+            existente.setProducto(partialProductoOrden.getProducto());
+        }
+
+        ProductoOrden actualizado = productoOrdenService.save(existente);
+        return ResponseEntity.ok(actualizado);
     }
 
     @DeleteMapping("/{id}")
