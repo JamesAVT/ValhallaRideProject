@@ -1,6 +1,7 @@
 package com.valhallaride.valhallaride.service;
 
 import com.valhallaride.valhallaride.model.ProductoOrden;
+import com.valhallaride.valhallaride.repository.OrdenRepository;
 import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
 import com.valhallaride.valhallaride.repository.ProductoRepository;
 
@@ -21,6 +22,9 @@ public class ProductoOrdenService {
     @Autowired
     private ProductoRepository productoRepository;
 
+    @Autowired
+    private OrdenRepository ordenRepository;
+
     @Transactional
     public ProductoOrden save(ProductoOrden productoOrden) {
         // Asigna fecha si es null
@@ -32,6 +36,13 @@ public class ProductoOrdenService {
         if (productoOrden.getProducto() != null && productoOrden.getProducto().getIdProducto() != null) {
             productoOrden.setProducto(productoRepository.findById(
                     productoOrden.getProducto().getIdProducto()).orElse(null));
+        }
+
+        // Aquí cargamos la orden completa
+        if (productoOrden.getOrden() != null && productoOrden.getOrden().getIdOrden() != null) {
+            productoOrden.setOrden(
+                ordenRepository.findById(productoOrden.getOrden().getIdOrden()).orElse(null)
+            );
         }
 
         return productoOrdenRepository.save(productoOrden);
@@ -59,5 +70,10 @@ public class ProductoOrdenService {
 
     public void delete(Integer id) {
         productoOrdenRepository.deleteById(id);
+    }
+
+    public ProductoOrden patchProductoOrden(Integer id, ProductoOrden partialProductoOrden) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'patchProductoOrden'");
     }
 }
