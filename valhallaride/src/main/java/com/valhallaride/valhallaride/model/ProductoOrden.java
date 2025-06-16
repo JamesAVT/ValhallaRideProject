@@ -21,7 +21,7 @@ public class ProductoOrden {
     private Integer idProductoOrden;
 
     @Column(nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(nullable = false)
     private Integer precioProducto; // Precio en el momento de la compra
