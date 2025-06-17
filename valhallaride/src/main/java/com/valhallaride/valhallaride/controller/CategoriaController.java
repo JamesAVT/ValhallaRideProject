@@ -18,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valhallaride.valhallaride.model.Categoria;
 import com.valhallaride.valhallaride.service.CategoriaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/categorias")
+@Tag(name = "Categorias", description = "Operaciones relacionadas con las Categorias")
+
 public class CategoriaController {
 
     @Autowired
     private CategoriaService categoriaService;
 
    @GetMapping
+   @Operation(summary = "Obtener todas las categorias", description = "Obtiene una lista de todas las categorias")
     public ResponseEntity<List<Categoria>> listar() {
         List<Categoria> categorias = categoriaService.findAll();
         if (categorias.isEmpty()) {
@@ -47,6 +53,7 @@ public class CategoriaController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener categorias por ID", description = "Obtiene categorias según su ID")
     public ResponseEntity<Categoria> buscar(@PathVariable Long id) {
         try {
             Categoria categoria = categoriaService.findById(id);
@@ -72,12 +79,14 @@ public class CategoriaController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear Categorias", description = "Permite crear categorias")
     public ResponseEntity<Categoria> guardar(@RequestBody Categoria categoria) {
         Categoria categoriaNueva = categoriaService.save(categoria);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaNueva);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar Categoria por su ID", description = "Actualiza los datos de una categoria ya existente")
     public ResponseEntity<Categoria> actualizar(@PathVariable Long id, @RequestBody Categoria categoria) {
         Categoria catActualizada = categoriaService.updateCategoria(id, categoria);
         if (catActualizada != null){
@@ -96,6 +105,7 @@ public class CategoriaController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Actualizar parcialmente Categoria por su ID", description = "Permite actualizar parcialmente los datos de una categoria existente")
     public ResponseEntity<Categoria> patchCategoria(@PathVariable Long id, @RequestBody Categoria partialCategoria) {
         try {
             Categoria updatedCategoria = categoriaService.patchCategoria(id, partialCategoria);
@@ -115,6 +125,7 @@ public class CategoriaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar Categoria por su ID", description = "Elimina una categoria existente")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             categoriaService.delete(id);
