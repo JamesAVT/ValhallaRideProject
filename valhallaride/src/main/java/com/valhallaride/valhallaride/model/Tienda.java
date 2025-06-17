@@ -30,10 +30,10 @@ public class Tienda {                                          // Con esta anota
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTienda;
 
-    @Column(length = 30, nullable = false, unique = true)
+    @Column(length = 100, nullable = false, unique = true)
     private String nombreTienda;
 
-    @Column(length = 30, nullable = false)
+    @Column(length = 100, nullable = false)
     private String direccionTienda;
 
     @OneToMany(mappedBy = "tienda")
