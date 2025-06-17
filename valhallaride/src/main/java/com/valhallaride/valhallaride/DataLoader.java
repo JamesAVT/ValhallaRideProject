@@ -149,6 +149,7 @@ public class DataLoader implements CommandLineRunner{
 
     List<Orden> ordenes = ordenRepository.findAll();
 
+    // probando probando
     for(int i = 0; i < 5; i++){
         ProductoOrden productoOrden = new ProductoOrden();
         productoOrden.setCantidad(faker.number().numberBetween(1, 10));
