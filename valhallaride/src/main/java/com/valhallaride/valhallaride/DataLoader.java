@@ -141,7 +141,7 @@ public class DataLoader implements CommandLineRunner{
 
     for(int i = 0; i < 5; i++){
         Orden orden = new Orden();
-        orden.setFecha(LocalDateTime.now());
+        orden.setFecha(LocalDate.now());
         orden.setPagado(faker.bool().bool());
         orden.setUsuario(usuarios.get(random.nextInt(usuarios.size())));
         orden.setMetodopago(metodosPagos.get(random.nextInt(metodosPagos.size())));
@@ -152,14 +152,16 @@ public class DataLoader implements CommandLineRunner{
     for(int i = 0; i < 5; i++){
         ProductoOrden productoOrden = new ProductoOrden();
         productoOrden.setCantidad(faker.number().numberBetween(1, 10));
-        productoOrden.setPrecioProducto(productos.getPrecio());
+        
+        Producto productoElegido = productos.get(random.nextInt(productos.size())); 
+        productoOrden.setPrecioProducto(productoElegido.getPrecioProducto()); // Chicos, aqui accedemos al precio
+        productoOrden.setProducto(productoElegido); // Y aqui le asignamos el producto
+
         productoOrden.setFechaHora(LocalDateTime.now());
         productoOrden.setOrden(ordenes.get(random.nextInt(ordenes.size())));
-        productoOrden.setProducto(productos.get(random.nextInt(productos.size())));
+
         productoOrdenRepository.save(productoOrden);
     }
-
-    List<ProductoOrden> productoOrdenes = productoOrdenRepository.findAll();
-
+    
     }
 }
