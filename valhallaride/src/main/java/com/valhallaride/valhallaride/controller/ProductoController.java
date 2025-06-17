@@ -18,8 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valhallaride.valhallaride.model.Producto;
 import com.valhallaride.valhallaride.service.ProductoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/productos")
+@Tag(name = "Productos", description = "Operaciones relacionadas con Productos")
+
 public class ProductoController {
 
     @Autowired
@@ -35,6 +40,7 @@ public class ProductoController {
     }
 
     @GetMapping
+    @Operation(summary = "Obtener todos los productos", description = "Obtiene una lista de todos los productos")
     public ResponseEntity<List<Producto>> listar() {
         List<Producto> productos = productoService.findAll();
         if (productos.isEmpty()) {
@@ -53,6 +59,7 @@ public class ProductoController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener productos por ID", description = "Obtiene un producto por su ID")
     public ResponseEntity<Producto> buscar(@PathVariable Integer id) {
         try {
             Producto producto = productoService.findById(id);
@@ -71,9 +78,8 @@ public class ProductoController {
 
     // Buscar productos cuyo nombre contenga cierta palabra (insensible a
     // mayúsculas)
-    // Para buscar necesitamos http://localhost:8080/api/v1/productos/buscar-por-nombre?nombre=leche
-
     @GetMapping("/buscar-por-nombre")
+    @Operation(summary = "Obtener productos por nombre", description = "Obtiene una lista de productos cuyo nombre coincida con el valor proporcionado")
     public ResponseEntity<List<Producto>> buscarPorNombre(
             @org.springframework.web.bind.annotation.RequestParam String nombre) {
         List<Producto> productos = productoService.buscarPorNombre(nombre);
@@ -85,6 +91,7 @@ public class ProductoController {
 
     // Buscar productos por nombre exacto y categoría
     @GetMapping("/buscar-por-nombre-categoria")
+    @Operation(summary = "Obtener productos por nombre y categoria", description = "Obtiene una lista de productos que coinciden con un nombre dentro de una categoria especifica ")
     public ResponseEntity<List<Producto>> buscarPorNombreYCategoria(
             @org.springframework.web.bind.annotation.RequestParam String nombre,
             @org.springframework.web.bind.annotation.RequestParam Integer idCategoria) {
@@ -97,6 +104,7 @@ public class ProductoController {
 
     // Buscar productos dentro de un rango de precios
     @GetMapping("/buscar-rango-precio")
+    @Operation(summary = "Obtener productos por rango de precio", description = "Obtiene una lista de productos cuyo precio este dentro de un rango especificado")
     public ResponseEntity<List<Producto>> buscarPorRangoPrecio(
             @org.springframework.web.bind.annotation.RequestParam Integer min,
             @org.springframework.web.bind.annotation.RequestParam Integer max) {
@@ -109,6 +117,7 @@ public class ProductoController {
 
     // Buscar productos de una tienda ordenados por precio
     @GetMapping("/buscar-por-tienda-precio-desc")
+    @Operation(summary = "Obtener productos de una tienda ordenados por precio descendente", description = "Obtiene los productos de la tienda, ordenados de mayor a menor segun el precio")
     public ResponseEntity<List<Producto>> buscarPorTiendaOrdenadoPorPrecio(
             @org.springframework.web.bind.annotation.RequestParam Integer idTienda) {
         List<Producto> productos = productoService.buscarPorTiendaOrdenadoPorPrecio(idTienda);
@@ -120,6 +129,7 @@ public class ProductoController {
 
     // Buscar productos con stock menor a cierto valor
     @GetMapping("/buscar-stock-bajo")
+    @Operation(summary = "Obtener productos con bajo stock", description = "Obtiene una lista de productos cuyo stock es bajo")
     public ResponseEntity<List<Producto>> buscarConStockBajo(
             @org.springframework.web.bind.annotation.RequestParam Integer stock) {
         List<Producto> productos = productoService.buscarConStockBajo(stock);
@@ -130,12 +140,14 @@ public class ProductoController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear Producto", description = "Crea un nuevo producto")
     public ResponseEntity<Producto> guardar(@RequestBody Producto producto) {
         Producto productoNuevo = productoService.save(producto);
         return ResponseEntity.status(HttpStatus.CREATED).body(productoNuevo);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar Producto por su ID", description = "Actualiza todos los datos de un producto ya existente")
     public ResponseEntity<Producto> actualizar(@PathVariable Integer id, @RequestBody Producto producto) {
         try {
             Producto productoYaExistente = productoService.findById(id);
@@ -158,6 +170,7 @@ public class ProductoController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Actualizar parcialmente un Producto por ID", description = "Actualiza parcialmente los datos de un producto existente")
     public ResponseEntity<Producto> patchProducto(@PathVariable Integer id, @RequestBody Producto partialProducto) {
         try {
             Producto updatedProducto = productoService.patchProducto(id, partialProducto);
@@ -176,6 +189,7 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar Producto por su ID", description = "Elimina un producto existente")
     public ResponseEntity<?> eliminar(@PathVariable Integer id) {
         try {
             productoService.delete(id);
