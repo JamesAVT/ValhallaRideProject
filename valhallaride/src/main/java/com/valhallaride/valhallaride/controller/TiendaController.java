@@ -18,14 +18,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.valhallaride.valhallaride.model.Tienda;
 import com.valhallaride.valhallaride.service.TiendaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/v1/tiendas")
+@Tag(name = "Tiendas", description = "Operaciones relacionadas con Tiendas")
+
 public class TiendaController {
 
     @Autowired
     private TiendaService tiendaService;
 
     @GetMapping
+    @Operation(summary = "Obtener todas las tiendas", description = "Obtiene una lista de todas las tiendas")
     public ResponseEntity<List<Tienda>> listar() {
         List<Tienda> tiendas = tiendaService.findAll();
         if (tiendas.isEmpty()) {
@@ -35,6 +41,7 @@ public class TiendaController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Obtener una tienda por ID", description = "Obtiene una tienda especificada por su ID")
     public ResponseEntity<Tienda> buscar(@PathVariable Long id) {
         Tienda tienda = tiendaService.findById(id);
         if (tienda != null) {
@@ -46,12 +53,14 @@ public class TiendaController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear Tienda", description = "Crea una nueva tienda")
     public ResponseEntity<Tienda> guardar(@RequestBody Tienda tienda) {
         Tienda tiendaNueva = tiendaService.save(tienda);
         return ResponseEntity.status(HttpStatus.CREATED).body(tiendaNueva);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Actualizar Tienda por su ID", description = "Actualiza todos los datos de una tienda existente")
     public ResponseEntity<Tienda> actualizar(@PathVariable Long id, @RequestBody Tienda tienda) {
         Tienda tiendaActualizada = tiendaService.updateTienda(id, tienda);
 
@@ -63,6 +72,7 @@ public class TiendaController {
     }
 
     @PatchMapping("/{id}")
+    @Operation(summary = "Actualizar parcialmente una Tienda por ID", description = "Actualiza parcialmente los datos de una tienda existente")
     public ResponseEntity<Tienda> patchTienda(@PathVariable Long id, @RequestBody Tienda partialTienda) {
         try {
             Tienda updatedTienda = tiendaService.patchTienda(id, partialTienda);
@@ -73,6 +83,7 @@ public class TiendaController {
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar Tienda por ID", description = "Elimina una tienda existente")
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         try {
             tiendaService.delete(id);
