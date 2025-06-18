@@ -79,7 +79,7 @@ public class ProductoOrdenController {
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Actualizar ProductoOrden por su ID", description = "Actualiza los datos de una relacion ya existente entre un producto y una orden")
+    @Operation(summary = "Actualizar ProductoOrden por su ID", description = "Actualiza los datos de una relacion ya existente de un producto y una orden")
     public ResponseEntity<ProductoOrden> actualizar(@PathVariable Integer id, @RequestBody ProductoOrden productoOrden) {
         ProductoOrden existente = productoOrdenService.findById(id);
         if (existente == null) {
