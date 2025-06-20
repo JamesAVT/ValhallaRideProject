@@ -1,5 +1,7 @@
 package com.valhallaride.valhallaride.repository;
 
+import com.valhallaride.valhallaride.model.Orden;
+import com.valhallaride.valhallaride.model.Producto;
 import com.valhallaride.valhallaride.model.ProductoOrden;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,10 @@ public interface ProductoOrdenRepository extends JpaRepository<ProductoOrden, In
 
     // Buscar todas las ventas (producto + fecha)
     List<ProductoOrden> findAllByOrderByFechaHoraDesc();
+
+    List<ProductoOrden> findByOrden(Orden orden);
+
+    List<ProductoOrden> findByProducto(Producto producto);
 
     // Puedes agregar más métodos según lo necesites
 }
