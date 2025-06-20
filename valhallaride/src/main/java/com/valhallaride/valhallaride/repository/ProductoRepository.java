@@ -4,7 +4,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.valhallaride.valhallaride.model.Categoria;
 import com.valhallaride.valhallaride.model.Producto;
+import com.valhallaride.valhallaride.model.Tienda;
+
 import java.util.List;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
@@ -23,5 +26,9 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
     @Query("SELECT p FROM Producto p WHERE p.stockProducto < :stock")
     List<Producto> buscarConStockBajo(@Param("stock") Integer stock);
+
+    List<Producto> findByCategoria(Categoria categoria);
+
+    List<Producto> findByTienda(Tienda tienda);
 
 }
