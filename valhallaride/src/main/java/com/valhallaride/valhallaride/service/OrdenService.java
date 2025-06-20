@@ -69,4 +69,24 @@ public class OrdenService {
     public void delete(Integer id) {
         ordenRepository.deleteById(id);
     }
+
+    public Orden patchOrden(Integer id, Orden parcialOrden) {
+        Optional<Orden> ordenOptional = ordenRepository.findById(id);
+        if (ordenOptional.isPresent()){
+
+            Orden ordenToUpdate = ordenOptional.get();
+
+            if (parcialOrden.getFecha() != null){
+                ordenToUpdate.setFecha(parcialOrden.getFecha());
+            }
+
+            if (parcialOrden.getPagado() != null){
+                ordenToUpdate.setPagado(parcialOrden.getPagado());
+            }
+
+            return ordenRepository.save(ordenToUpdate);
+        } else{
+            return null;
+        }
+    }
 }
