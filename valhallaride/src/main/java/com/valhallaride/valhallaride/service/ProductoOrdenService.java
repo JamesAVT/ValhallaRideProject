@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -87,8 +88,27 @@ public class ProductoOrdenService {
         productoOrdenRepository.deleteById(id);
     }
 
-    public ProductoOrden patchProductoOrden(Integer id, ProductoOrden partialProductoOrden) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'patchProductoOrden'");
+    public ProductoOrden patchProductoOrden(Integer id, ProductoOrden parcialProductoOrden) {
+        Optional<ProductoOrden> productoOrdenOptional = productoOrdenRepository.findById(id);
+        if(productoOrdenOptional.isPresent()){
+
+            ProductoOrden productoOrdenToUpdate = productoOrdenOptional.get();
+
+            if (parcialProductoOrden.getCantidad() != null){
+                productoOrdenToUpdate.setCantidad(parcialProductoOrden.getCantidad());
+            }
+
+            if (parcialProductoOrden.getPrecioProducto() != null){
+                productoOrdenToUpdate.setPrecioProducto(parcialProductoOrden.getPrecioProducto());
+            }
+
+            if (parcialProductoOrden.getFechaHora() != null){
+                productoOrdenToUpdate.setFechaHora(parcialProductoOrden.getFechaHora());
+            }
+
+            return productoOrdenRepository.save(productoOrdenToUpdate);
+        }else{
+            return null;
+        }
     }
 }
