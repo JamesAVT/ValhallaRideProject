@@ -59,7 +59,7 @@ public class UsuarioControllerv2 {
 
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-        usuario.setIdUsuario(id.intValue());
+        usuario.setIdUsuario(id);
         Usuario usuarioActualizado = usuarioService.save(usuario);
         return ResponseEntity
                 .ok(assembler.toModel(usuarioActualizado));
