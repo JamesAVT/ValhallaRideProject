@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.valhallaride.valhallaride.model.MetodoPago;
+import com.valhallaride.valhallaride.model.Orden;
 import com.valhallaride.valhallaride.repository.MetodoPagoRepository;
+import com.valhallaride.valhallaride.repository.OrdenRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,12 +20,15 @@ public class MetodoPagoService {
     @Autowired
     private MetodoPagoRepository metodoPagoRepository;
 
+    @Autowired
+    private OrdenRepository ordenRepository;
+
     public List<MetodoPago> findAll() {
         return metodoPagoRepository.findAll();
     }
 
     public MetodoPago findById(Long id) {
-        return metodoPagoRepository.getById(id);
+        return metodoPagoRepository.findById(id).orElse(null);
     }
 
     public MetodoPago save(MetodoPago metodoPago) {
@@ -31,7 +36,18 @@ public class MetodoPagoService {
     }
 
     public void delete(long id) {
-        metodoPagoRepository.deleteById(id);
+        MetodoPago metodoPago = metodoPagoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Metodo de pago no encontrado"));
+        
+        List<Orden> ordenes = ordenRepository.findByMetodoPago(metodoPago);
+
+        // Chicos, aqui elimina primero las ordenes que esten usando este metodo de pago!
+        for (Orden orden : ordenes) {
+            ordenRepository.delete(orden);
+        }
+
+        // Y aqui elimina el metodo de pago
+        metodoPagoRepository.delete(metodoPago);
     }
 
     public MetodoPago patchMetodoPago(Long id, MetodoPago parcialMetodoPago) {
