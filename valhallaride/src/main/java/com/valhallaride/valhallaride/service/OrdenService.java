@@ -1,7 +1,10 @@
 package com.valhallaride.valhallaride.service;
 
 import com.valhallaride.valhallaride.model.Orden;
+import com.valhallaride.valhallaride.model.ProductoOrden;
 import com.valhallaride.valhallaride.repository.OrdenRepository;
+import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,9 @@ public class OrdenService {
 
     @Autowired
     private OrdenRepository ordenRepository;
+
+    @Autowired
+    private ProductoOrdenRepository productoOrdenRepository;
 
     public List<Orden> findAll() {
         return ordenRepository.findAll();
@@ -67,7 +73,18 @@ public class OrdenService {
     }
 
     public void delete(Integer id) {
-        ordenRepository.deleteById(id);
+        Orden orden = ordenRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        List<ProductoOrden> productoOrdenes = productoOrdenRepository.findByOrden(orden);
+
+        // Aqui chicos primero elimina los ProductoOrden que esten asociados
+        for (ProductoOrden productoOrden : productoOrdenes) {
+            productoOrdenRepository.delete(productoOrden);
+        }
+
+        // Y aqui elimina la Orden!
+        ordenRepository.delete(orden);
     }
 
     public Orden patchOrden(Integer id, Orden parcialOrden) {
