@@ -13,9 +13,8 @@ public class SwaggerConfig {
     public OpenAPI customAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API ValhallaRide")
+                        .title("API administración de tienda ValhallaRide")
                         .version("1.0")
-                        .description("Documentación de la API para ValhallaRide"));
+                        .description("Con esta API se puede administar la tienda de ValhallaRide"));
     }
 }
-
