@@ -85,7 +85,10 @@ public class ProductoOrdenService {
     }
 
     public void delete(Integer id) {
-        productoOrdenRepository.deleteById(id);
+        ProductoOrden productoOrden = productoOrdenRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto Orden no encontrada")); 
+
+        productoOrdenRepository.delete(productoOrden);
     }
 
     public ProductoOrden patchProductoOrden(Integer id, ProductoOrden parcialProductoOrden) {
