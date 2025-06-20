@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.valhallaride.valhallaride.model.Producto;
+import com.valhallaride.valhallaride.model.ProductoOrden;
+import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
 import com.valhallaride.valhallaride.repository.ProductoRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,6 +19,9 @@ public class ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
+    @Autowired
+    private ProductoOrdenRepository productoOrdenRepository;
 
     public List<Producto> findAll() {
         return productoRepository.findAll();
@@ -31,7 +36,18 @@ public class ProductoService {
     }
 
     public void delete(Integer id) {
-        productoRepository.deleteById(id);
+        Producto producto = productoRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+
+        // Chicos, aqui buscamos todas las relaciones de ProductoOrden con este producto
+        List<ProductoOrden> productosOrden = productoOrdenRepository.findByProducto(producto);
+
+        // Aqui se eliminan todas las relaciones
+        for (ProductoOrden productoOrden : productosOrden) {
+            productoOrdenRepository.delete(productoOrden);
+        }
+
+        // Y aqui se elimina el producto
+        productoRepository.delete(producto);
     }
 
     public Producto updateProducto(Integer id, Producto producto) {
