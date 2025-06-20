@@ -69,7 +69,7 @@ public class CategoriaControllerv2 {
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<?> eliminarCategoria(@PathVariable Long id){
-        categoriaService.deleteById(id);    
+        categoriaService.delete(id);    
         return ResponseEntity.noContent().build();
     }
 }
