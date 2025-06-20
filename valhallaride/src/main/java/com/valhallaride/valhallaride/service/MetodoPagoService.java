@@ -41,7 +41,7 @@ public class MetodoPagoService {
         
         List<Orden> ordenes = ordenRepository.findByMetodoPago(metodoPago);
 
-        // Chicos, aqui elimina primero las ordenes que esten usando este metodo de pago!
+        // Chicos, aqui elimina primero las ordenes que esten usando (o relacionadas a) este metodo de pago!
         for (Orden orden : ordenes) {
             ordenRepository.delete(orden);
         }
