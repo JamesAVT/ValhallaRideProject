@@ -12,4 +12,7 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     List<Orden> findByUsuario_IdUsuario(Integer idUsuario);
 
     List<Orden> findByPagado(Boolean pagado);
+    
+    List<Orden> findByMetodoPago(MetodoPago metodopago);
+    
 }
