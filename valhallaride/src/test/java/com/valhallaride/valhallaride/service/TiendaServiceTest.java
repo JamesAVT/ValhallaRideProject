@@ -32,7 +32,7 @@ public class TiendaServiceTest {
 
     private Tienda createTienda() {
         return new Tienda(
-            1, 
+            1L, 
             "ValhallaRide", 
             "Av. Kennedy, Las Condes", 
             new ArrayList<>() // Lista vacia de productos. Usamos ArrayList porque es una lista de productos
