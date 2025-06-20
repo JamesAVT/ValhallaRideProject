@@ -6,7 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.valhallaride.valhallaride.model.Orden;
+import com.valhallaride.valhallaride.model.ProductoOrden;
 import com.valhallaride.valhallaride.model.Usuario;
+import com.valhallaride.valhallaride.repository.OrdenRepository;
+import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
 import com.valhallaride.valhallaride.repository.UsuarioRepository;
 
 @Service
@@ -14,6 +18,12 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private OrdenRepository ordenRepository;
+
+    @Autowired
+    private ProductoOrdenRepository productoOrdenRepository;
 
     public List<Usuario> findAll(){
         return usuarioRepository.findAll();
@@ -28,7 +38,27 @@ public class UsuarioService {
     }
 
     public void delete(Long id){
-        usuarioRepository.deleteById(id);
+        // Aqui buscamos el usuario
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Aqui buscamos todas las ordenes de un usuario
+        List<Orden> ordenes = ordenRepository.findByUsuario(usuario);
+
+        for (Orden orden : ordenes) {
+            // Aca buscamos los ProductoOrden de cada orden 
+            List<ProductoOrden> productosOrden = productoOrdenRepository.findByOrden(orden);
+
+            // Aca eliminamos todos los ProductoOrden de la orden
+            for (ProductoOrden productoOrden : productosOrden) {
+                productoOrdenRepository.delete(productoOrden);
+            }
+
+            // Aca se elimina la orden
+            ordenRepository.delete(orden);
+        }
+
+        // Y aqui eliminamos el usuario
+        usuarioRepository.delete(usuario);
     }
 
     public Usuario updateUsuario(Long id, Usuario usuario) {
