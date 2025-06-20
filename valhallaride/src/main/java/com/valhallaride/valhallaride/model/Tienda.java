@@ -28,7 +28,7 @@ public class Tienda {                                          // Con esta anota
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTienda;
+    private Long idTienda;
 
     @Column(length = 100, nullable = false, unique = true)
     private String nombreTienda;
