@@ -6,7 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.valhallaride.valhallaride.model.Producto;
+import com.valhallaride.valhallaride.model.ProductoOrden;
 import com.valhallaride.valhallaride.model.Tienda;
+import com.valhallaride.valhallaride.repository.ProductoOrdenRepository;
+import com.valhallaride.valhallaride.repository.ProductoRepository;
 import com.valhallaride.valhallaride.repository.TiendaRepository;
 
 import jakarta.transaction.Transactional;
@@ -17,6 +21,12 @@ public class TiendaService {
 
     @Autowired
     private TiendaRepository tiendaRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private ProductoOrdenRepository productoOrdenRepository;
 
     public List<Tienda> findAll() {
         return tiendaRepository.findAll();
@@ -31,7 +41,23 @@ public class TiendaService {
     }
 
     public void delete(Long id) {
-        tiendaRepository.deleteById(id);
+        Tienda tienda = tiendaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tienda no encontrada"));
+
+        List<Producto> productos = productoRepository.findByTienda(tienda);
+
+        for (Producto producto : productos) {
+            // Aqui chicos se eliminara ProductoOrden que este relacionado con un producto
+            List<ProductoOrden> productoOrdenes = productoOrdenRepository.findByProducto(producto);
+            for (ProductoOrden productoOrden : productoOrdenes) {
+                productoOrdenRepository.delete(productoOrden);
+            }
+
+            // Aqui se elimina el producto
+            productoRepository.delete(producto);
+        }
+
+        // Y aqui se elimina la tienda
+        tiendaRepository.delete(tienda);
     }
 
     public Tienda updateTienda(Long id, Tienda tienda){
