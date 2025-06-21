@@ -144,7 +144,7 @@ public class DataLoader implements CommandLineRunner{
         orden.setFecha(LocalDate.now());
         orden.setPagado(faker.bool().bool());
         orden.setUsuario(usuarios.get(random.nextInt(usuarios.size())));
-        orden.setMetodopago(metodosPagos.get(random.nextInt(metodosPagos.size())));
+        orden.setMetodoPago(metodosPagos.get(random.nextInt(metodosPagos.size())));
         
         ordenRepository.save(orden);
     }
