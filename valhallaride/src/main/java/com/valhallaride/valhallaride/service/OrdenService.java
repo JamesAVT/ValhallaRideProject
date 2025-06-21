@@ -73,12 +73,14 @@ public class OrdenService {
     }
 
     public void delete(Integer id) {
+        // Aca verificamos si la orden existe
         Orden orden = ordenRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
 
+        // Aqui hacemos un listado de ProductoOrden asociados a la orden
         List<ProductoOrden> productoOrdenes = productoOrdenRepository.findByOrden(orden);
 
-        // Aqui chicos primero elimina los ProductoOrden que esten asociados
+        // Aqui chicos elimina los ProductoOrden que esten asociados a una orden
         for (ProductoOrden productoOrden : productoOrdenes) {
             productoOrdenRepository.delete(productoOrden);
         }
