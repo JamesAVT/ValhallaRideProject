@@ -56,7 +56,7 @@ public class OrdenService {
             ordenExistente.setFecha(ordenActualizada.getFecha());
             ordenExistente.setPagado(ordenActualizada.getPagado());
             ordenExistente.setUsuario(ordenActualizada.getUsuario());
-            ordenExistente.setMetodopago(ordenActualizada.getMetodopago());
+            ordenExistente.setMetodoPago(ordenActualizada.getMetodoPago());
 
             return ordenRepository.save(ordenExistente);
         }
