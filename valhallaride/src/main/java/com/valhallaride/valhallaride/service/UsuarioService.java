@@ -38,10 +38,10 @@ public class UsuarioService {
     }
 
     public void delete(Long id){
-        // Aqui buscamos el usuario
+        // Aqui verificamos si el usuario existe
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Aqui buscamos todas las ordenes de un usuario
+        // Aca hacemos un listado de ordenes asociados al usuario
         List<Orden> ordenes = ordenRepository.findByUsuario(usuario);
 
         for (Orden orden : ordenes) {
