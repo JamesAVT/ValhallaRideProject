@@ -41,8 +41,10 @@ public class TiendaService {
     }
 
     public void delete(Long id) {
+        // Verificamos si la tienda existe
         Tienda tienda = tiendaRepository.findById(id).orElseThrow(() -> new RuntimeException("Tienda no encontrada"));
 
+        // Aqui, hacemos un listado de productos asociados a la tienda
         List<Producto> productos = productoRepository.findByTienda(tienda);
 
         for (Producto producto : productos) {
