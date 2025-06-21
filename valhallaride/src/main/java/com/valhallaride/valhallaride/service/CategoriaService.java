@@ -41,9 +41,11 @@ public class CategoriaService {
     }
 
     public void delete(Long id) {
+        // Aca verificamos si la categoria existe
         Categoria categoria = categoriaRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Categoria no encontrada"));
         
+        // Y aca hacemos un listado de productos asociados a la categoria
         List<Producto> productos = productoRepository.findByCategoria(categoria);
 
         for (Producto producto : productos) {
