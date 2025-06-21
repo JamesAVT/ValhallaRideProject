@@ -36,12 +36,14 @@ public class MetodoPagoService {
     }
 
     public void delete(long id) {
+        // Aqui verificamos si el metodo pago existe
         MetodoPago metodoPago = metodoPagoRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Metodo de pago no encontrado"));
-        
+
+        // Aca, hacemos un listado de ordenes que esten asociados al metodo pago
         List<Orden> ordenes = ordenRepository.findByMetodoPago(metodoPago);
 
-        // Chicos, aqui elimina primero las ordenes que esten usando (o relacionadas a) este metodo de pago!
+        // Chicos, aqui se elimina las ordenes relacionadas con el metodo de pago!
         for (Orden orden : ordenes) {
             ordenRepository.delete(orden);
         }
