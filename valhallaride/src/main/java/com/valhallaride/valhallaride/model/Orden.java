@@ -1,6 +1,7 @@
 package com.valhallaride.valhallaride.model;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -28,11 +29,11 @@ public class Orden {
     @Column(nullable = false)
     private Boolean pagado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idUsuario", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)                  // Chicos, recuerden que fetch nos permite hacer consultas mas rapidas, porque evita traer toda 
+    @JoinColumn(name = "idUsuario", nullable = false)  // la información relacionada automaticamente, y solo nos trae lo que necesitamos en el momento
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "orden", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<ProductoOrden> productosOrden;
 
