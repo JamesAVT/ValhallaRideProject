@@ -59,7 +59,7 @@ public class TiendaControllerv2 {
 
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Tienda>> actualizarTienda(@PathVariable Long id, @RequestBody Tienda tienda){
-        tienda.setIdTienda(id.intValue());
+        tienda.setIdTienda(id);
         Tienda tiendaActualizada = tiendaService.save(tienda);
         return ResponseEntity
                 .ok(assembler.toModel(tiendaActualizada));
