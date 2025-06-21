@@ -39,5 +39,5 @@ public class Orden {
 
     @ManyToOne
     @JoinColumn(name = "id_met_pago", nullable = false)
-    private MetodoPago metodopago;
+    private MetodoPago metodoPago;
 }
