@@ -36,12 +36,14 @@ public class ProductoService {
     }
 
     public void delete(Integer id) {
-        Producto producto = productoRepository.findById(id).orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        // Verificamos si el producto existe
+        Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        // Chicos, aqui buscamos todas las relaciones de ProductoOrden con este producto
+        // Chicos, aqui hacemos un listado de ProductoOrden asociado al producto
         List<ProductoOrden> productosOrden = productoOrdenRepository.findByProducto(producto);
 
-        // Aqui se eliminan todas las relaciones
+        // Aqui se elimina los ProductoOrden asociados al producto
         for (ProductoOrden productoOrden : productosOrden) {
             productoOrdenRepository.delete(productoOrden);
         }
