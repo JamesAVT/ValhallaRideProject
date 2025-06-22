@@ -35,41 +35,41 @@ public class UsuarioControllerv2 {
     private UsuarioModelAssembler assembler;
 
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    public CollectionModel<EntityModel<Usuario>> getAllUsuarios(){
+    public CollectionModel<EntityModel<Usuario>> getAllUsuarios(){ // Método para obtener todos los usuarios 
         List<EntityModel<Usuario>> usuarios = usuarioService.findAll().stream()
-            .map(assembler::toModel)
-            .collect(Collectors.toList());
-        return CollectionModel.of(usuarios,
-                linkTo(methodOn(UsuarioControllerv2.class).getAllUsuarios()).withSelfRel());
+            .map(assembler::toModel) // Convierte cada usuario en un EntityModel
+            .collect(Collectors.toList()); //  Y obtenemos sus links de HATEOAS
+        return CollectionModel.of(usuarios, // Se "guarda" la lista en el CollectionModel, con enlaces HATEOAS
+                linkTo(methodOn(UsuarioControllerv2.class).getAllUsuarios()).withSelfRel()); 
         
     }
 
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public EntityModel<Usuario> getUsuarioById(@PathVariable Long id){
-        Usuario usuario = usuarioService.findById(id);
-        return assembler.toModel(usuario);
+        Usuario usuario = usuarioService.findById(id); // Se busca el usuario usando service
+        return assembler.toModel(usuario); // Se convierte el Usuario en EntityModel, usando el assembler(agrega enlaces HATEOAS)
     }
 
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> crearUsuario(@RequestBody Usuario usuario){
-        Usuario nuevoUsuario = usuarioService.save(usuario);
+        Usuario nuevoUsuario = usuarioService.save(usuario); // Se guarda el nuevo usuario usando service
         return ResponseEntity
-                .ok(assembler.toModel(nuevoUsuario));
+                .ok(assembler.toModel(nuevoUsuario)); // Devuelve respuesta 200 OK con el usuario con EntityModel (con enlaces HATEOAS)
 
     }
 
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario){
-        usuario.setIdUsuario(id);
-        Usuario usuarioActualizado = usuarioService.save(usuario);
-        return ResponseEntity
-                .ok(assembler.toModel(usuarioActualizado));
+        usuario.setIdUsuario(id); // Asigna el ID recibido 
+        Usuario usuarioActualizado = usuarioService.save(usuario); // Guarda el usuario actualizado usando service
+        return ResponseEntity // Devuelve una respuesta HTTP 200 OK
+                .ok(assembler.toModel(usuarioActualizado)); // Con EntityModel para incluir enlaces HATEOAS
 
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
         public ResponseEntity<?> eliminarUsuario(@PathVariable Long id){
-        usuarioService.delete(id);
-        return ResponseEntity.noContent().build();
+        usuarioService.delete(id); // Llama a service para eliminar el usuaio con el ID recibido
+        return ResponseEntity.noContent().build(); // Devuelve respuesta 204 No Content
     }
 }
