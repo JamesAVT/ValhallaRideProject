@@ -3,7 +3,7 @@ package com.valhallaride.valhallaride.repository;
 import com.valhallaride.valhallaride.model.MetodoPago;
 import com.valhallaride.valhallaride.model.Orden;
 import com.valhallaride.valhallaride.model.Usuario;
-
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
