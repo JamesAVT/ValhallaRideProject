@@ -18,7 +18,8 @@ import com.valhallaride.valhallaride.assemblers.ProductoModelAssembler;
 import com.valhallaride.valhallaride.model.Producto;
 import com.valhallaride.valhallaride.service.ProductoService;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.stream.Collectors;
