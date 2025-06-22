@@ -117,5 +117,9 @@ public class ProductoService {
     public List<Producto> buscarConStockBajo(Integer stock) {
         return productoRepository.buscarConStockBajo(stock);
     }
-
+    
+    // Query 1 - 3 tablas
+    public List<Object[]> listarProductosConCategoriaYTienda() {
+        return productoRepository.listarProductosConCategoriaYTienda();
+    }
 }
