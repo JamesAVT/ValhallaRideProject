@@ -52,7 +52,7 @@ public class CategoriaServiceTest {
         Categoria categoria = categoriaService.findById(1L);
         assertNotNull(categoria); // Asegura que la categoría no sea null
         assertEquals("Motocross", categoria.getNombreCategoria()); // Valida que el nombre sea correcto
-        
+    }
 
     @Test
     public void testSave() {  
