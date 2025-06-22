@@ -30,5 +30,13 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     List<Producto> findByCategoria(Categoria categoria);
 
     List<Producto> findByTienda(Tienda tienda);
+    
+    // Query 1 - 3 tablas
+    @Query("SELECT p.nombreProducto, c.nombreCategoria, t.nombreTienda " +
+       "FROM Producto p " +
+       "JOIN p.categoria c " +
+       "JOIN p.tienda t")
+    List<Object[]> listarProductosConCategoriaYTienda();
+
 
 }
