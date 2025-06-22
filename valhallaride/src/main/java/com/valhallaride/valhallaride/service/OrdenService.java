@@ -39,6 +39,11 @@ public class OrdenService {
         return ordenRepository.findByPagado(pagado);
     }
 
+    // Query 2 - 3 tablas
+    public List<Object[]> listarOrdenesConUsuarioYMetodoPago() {
+        return ordenRepository.listarOrdenesConUsuarioYMetodoPago();
+    }
+
     public Orden save(Orden orden) {
         if (orden.getFecha() == null) {
             orden.setFecha(LocalDate.now());
