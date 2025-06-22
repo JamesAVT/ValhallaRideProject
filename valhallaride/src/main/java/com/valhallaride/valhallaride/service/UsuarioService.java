@@ -33,6 +33,12 @@ public class UsuarioService {
         return usuarioRepository.findById(id).orElse(null);
     }
 
+    // Query 4  Usuarios con su rol y total de órdenes realizadas
+    public List<Object[]> listarUsuariosConRolYTotalOrdenes() {
+        return usuarioRepository.listarUsuariosConRolYTotalOrdenes();
+    }
+
+
     public Usuario save(Usuario usuario){
         return usuarioRepository.save(usuario);
     }
