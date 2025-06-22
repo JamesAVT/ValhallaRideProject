@@ -139,6 +139,12 @@ public class ProductoController {
         return ResponseEntity.ok(productos); // Limpia las relaciones (categoria, tienda) para evitar bucles
     }
 
+    // Query 1 - 3 tablas
+    @GetMapping("/categoria-tienda")
+    public List<Object[]> getProductosConCategoriaYTienda() {
+        return productoService.listarProductosConCategoriaYTienda();
+    }
+
     @PostMapping
     @Operation(summary = "Crear Producto", description = "Crea un nuevo producto")
     public ResponseEntity<Producto> guardar(@RequestBody Producto producto) { // Método que recibe un producto en formato JSON desde el @RequestBody y lo convierte a un objeto Producto
