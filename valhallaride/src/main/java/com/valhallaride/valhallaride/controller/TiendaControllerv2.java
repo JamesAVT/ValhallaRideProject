@@ -1,7 +1,5 @@
 package com.valhallaride.valhallaride.controller;
 
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 
