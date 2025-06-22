@@ -5,7 +5,8 @@ import org.springframework.stereotype.Component;
 import com.valhallaride.valhallaride.controller.ProductoOrdenControllerv2;
 import com.valhallaride.valhallaride.model.ProductoOrden;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
