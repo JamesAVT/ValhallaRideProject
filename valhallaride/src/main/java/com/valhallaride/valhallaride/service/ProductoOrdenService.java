@@ -83,6 +83,11 @@ public class ProductoOrdenService {
     public List<ProductoOrden> findAllOrderByFechaHoraDesc() {
         return productoOrdenRepository.findAllByOrderByFechaHoraDesc();
     }
+    
+    // Query 3 - 4 tablas
+    public List<Object[]> listarProductoOrdenConProductoYUsuario() {
+        return productoOrdenRepository.listarProductoOrdenConProductoYUsuario();
+    }
 
     public void delete(Integer id) {
         ProductoOrden productoOrden = productoOrdenRepository.findById(id)
