@@ -1,5 +1,7 @@
 package com.valhallaride.valhallaride.controller;
 
+
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,41 +37,41 @@ public class TiendaControllerv2 {
     private TiendaModelAssembler assembler;
 
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    public CollectionModel<EntityModel<Tienda>> getAllTiendas(){
-        List<EntityModel<Tienda>> tiendas = tiendaService.findAll().stream()
+    public CollectionModel<EntityModel<Tienda>> getAllTiendas(){ // Método para obtener todas las tiendas
+        List<EntityModel<Tienda>> tiendas = tiendaService.findAll().stream() // Obtiene la lista de todas las tiendas llamando a service. stream transforma cada objeto Tienda en un EntityModel con enlaces
         .map(assembler::toModel)
         .collect(Collectors.toList());
-    return CollectionModel.of(tiendas,
-                linkTo(methodOn(TiendaControllerv2.class).getAllTiendas()).withSelfRel());        
+    return CollectionModel.of(tiendas, // Devuelve un CollectionModel que contiene la lista de tiendas con sus enlaces 
+                linkTo(methodOn(TiendaControllerv2.class).getAllTiendas()).withSelfRel()); // Y un enlace self(a la URL para obtener todas las tiendas)       
     }
 
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public EntityModel<Tienda> getTiendaById(@PathVariable Long id){
-            Tienda tienda = tiendaService.findById(id);
-            return assembler.toModel(tienda);
+    public EntityModel<Tienda> getTiendaById(@PathVariable Long id){ // Método para obtener una tienda específica por su ID
+            Tienda tienda = tiendaService.findById(id); // Llama a service para buscar la tienda por su ID
+            return assembler.toModel(tienda); // Devuelve el objeto Tienda en un EntityModel, que tiene enlaces HATEOAS (actualizar, eliminar, etc)
     }
 
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Tienda>> crearTienda(@RequestBody Tienda tienda){
-        Tienda nuevaTienda = tiendaService.save(tienda);
-        return ResponseEntity
-                .ok(assembler.toModel(nuevaTienda));
+    public ResponseEntity<EntityModel<Tienda>> crearTienda(@RequestBody Tienda tienda){ // Método para crear una nueva tienda
+        Tienda nuevaTienda = tiendaService.save(tienda); // Llama a service para guardar la nueva tienda
+        return ResponseEntity // Devuelve 200 OK
+                .ok(assembler.toModel(nuevaTienda)); // La respuesta contiene la tienda creada, en un EntityModel que agrega enlaces HATEOAS
     
     }
 
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    public ResponseEntity<EntityModel<Tienda>> actualizarTienda(@PathVariable Long id, @RequestBody Tienda tienda){
-        tienda.setIdTienda(id);
-        Tienda tiendaActualizada = tiendaService.save(tienda);
-        return ResponseEntity
-                .ok(assembler.toModel(tiendaActualizada));
+    public ResponseEntity<EntityModel<Tienda>> actualizarTienda(@PathVariable Long id, @RequestBody Tienda tienda){ // Método para actualizar una tienda por su ID
+        tienda.setIdTienda(id); // Asigna el ID recibido al objeto tienda para asegurar que se actualice la tienda correcta
+        Tienda tiendaActualizada = tiendaService.save(tienda); // Llama a service para guardar (actualizar) la tienda con los datos dados
+        return ResponseEntity // Devuelve una respuesta 200 OK
+                .ok(assembler.toModel(tiendaActualizada)); // Contiene la tienda actualizada, en un EntityModel con los enlaces HATEOAS
 
         }
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-        public ResponseEntity<?> eliminarTienda(@PathVariable Long id){
-            tiendaService.delete(id);
-            return ResponseEntity.noContent().build();
+        public ResponseEntity<?> eliminarTienda(@PathVariable Long id){ // Método para eliminar una tienda por su ID
+            tiendaService.delete(id); // Llama a service para eliminar la tienda con el ID especificado
+            return ResponseEntity.noContent().build(); // Devuelve respuesta 204 No Content
 
     }
 }
