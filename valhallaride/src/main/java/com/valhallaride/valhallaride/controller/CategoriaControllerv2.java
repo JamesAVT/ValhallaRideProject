@@ -36,11 +36,11 @@ public class CategoriaControllerv2 {
     @Autowired
     private CategoriaModelAssembler assembler;
 
-    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)   // Devuelve datos en formato HALJSON(HATEOAS)
     public CollectionModel<EntityModel<Categoria>> getAllCategorias(){
         List<EntityModel<Categoria>> categorias = categoriaService.findAll().stream()
-                .map(assembler::toModel)
-                .collect(Collectors.toList());
+                .map(assembler::toModel)    // Aqui usa el assembler para tener cada categoria con los enlaces HATEOAS
+                .collect(Collectors.toList()); // Obtiene el resultado como lista
     
         return CollectionModel.of(categorias,
                 linkTo(methodOn(CategoriaControllerv2.class).getAllCategorias()).withSelfRel());
@@ -48,24 +48,24 @@ public class CategoriaControllerv2 {
 
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public EntityModel<Categoria> getCategoriaById(@PathVariable Long id){
-        Categoria categoria = categoriaService.findById(id);
-        return assembler.toModel(categoria);
+        Categoria categoria = categoriaService.findById(id); // Llama a service para obtener la categoria por un ID especifico
+        return assembler.toModel(categoria); // Y aqui convierte la entidad categoria en un EntityModel con enlaces HATEOAS 
         }
     
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Categoria>> crearCategoria(@RequestBody Categoria categoria){
         Categoria nuevCategoria = categoriaService.save(categoria);
-        return ResponseEntity
-            .created(linkTo(methodOn(CategoriaControllerv2.class).getCategoriaById(Long.valueOf(nuevCategoria.getIdCategoria()))).toUri())
-            .body(assembler.toModel(nuevCategoria));
+        return ResponseEntity // .created indica que se creo un nuevo recurso
+            .created(linkTo(methodOn(CategoriaControllerv2.class).getCategoriaById(Long.valueOf(nuevCategoria.getIdCategoria()))).toUri()) // Usa HATEOAS para construir el link de getCategoriaById, pasando el ID creado, y convierte ese enlace en una URI
+            .body(assembler.toModel(nuevCategoria)); // Establece el cuerpo de la respuesta con el objeto nuevCategoria, en un EntityModel con enlaces de HATEOAS
         }
     
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Categoria>> actualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria){
-        categoria.setIdCategoria(id.intValue());
-        Categoria categoriaActualizada = categoriaService.save(categoria);
-        return ResponseEntity
-                .ok(assembler.toModel(categoriaActualizada));
+        categoria.setIdCategoria(id.intValue()); // Establece el ID con el objeto categoria recibido, conviertiendo el Long a int, asegurando que el objeto tenga el ID correcto antes de guardarlo
+        Categoria categoriaActualizada = categoriaService.save(categoria); // Aqui llama al service para guardar (actualizar) la categoria con el nuevo contenido
+        return ResponseEntity 
+                .ok(assembler.toModel(categoriaActualizada)); // Devuelve una respuesta HTTP 200 OK con el cuerpo que incluye la categoria actualizada
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
