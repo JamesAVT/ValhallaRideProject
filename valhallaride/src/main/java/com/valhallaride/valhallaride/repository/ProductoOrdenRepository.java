@@ -24,5 +24,12 @@ public interface ProductoOrdenRepository extends JpaRepository<ProductoOrden, In
 
     List<ProductoOrden> findByProducto(Producto producto);
 
-    // Puedes agregar más métodos según lo necesites
+    // Query 3 - 4 tablas
+    @Query("SELECT po.idProductoOrden, p.nombreProducto, po.cantidad, u.nombreUsuario " +
+       "FROM ProductoOrden po " +
+       "JOIN po.producto p " +
+       "JOIN po.orden o " +
+       "JOIN o.usuario u")
+    List<Object[]> listarProductoOrdenConProductoYUsuario();
+
 }
