@@ -60,6 +60,12 @@ public class OrdenController {
         return ResponseEntity.ok(ordenes); // Y si hay órdenes, responde con 200 OK
     }
 
+    // Query 2 - 3 tablas
+    @GetMapping("/usuario-metodo")
+    public List<Object[]> getOrdenesConUsuarioYMetodoPago() {
+        return ordenService.listarOrdenesConUsuarioYMetodoPago();
+    }
+
     @PostMapping
     @Operation(summary = "Crear Orden", description = "Crea una orden")
     public ResponseEntity<Orden> registrar(@RequestBody Orden orden) {
