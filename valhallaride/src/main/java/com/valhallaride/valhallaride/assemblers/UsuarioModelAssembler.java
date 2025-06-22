@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import com.valhallaride.valhallaride.controller.UsuarioControllerv2;
 import com.valhallaride.valhallaride.model.Usuario;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @Component
 public class UsuarioModelAssembler implements RepresentationModelAssembler<Usuario, EntityModel<Usuario>> {
