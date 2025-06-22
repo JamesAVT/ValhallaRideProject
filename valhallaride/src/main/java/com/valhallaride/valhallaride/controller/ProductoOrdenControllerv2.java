@@ -18,7 +18,8 @@ import com.valhallaride.valhallaride.assemblers.ProductoOrdenModelAssembler;
 import com.valhallaride.valhallaride.model.ProductoOrden;
 import com.valhallaride.valhallaride.service.ProductoOrdenService;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 import java.util.stream.Collectors;
