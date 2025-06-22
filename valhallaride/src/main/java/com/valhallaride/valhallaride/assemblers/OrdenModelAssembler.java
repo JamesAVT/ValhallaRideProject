@@ -7,7 +7,8 @@ import org.springframework.stereotype.Component;
 import com.valhallaride.valhallaride.controller.OrdenControllerv2;
 import com.valhallaride.valhallaride.model.Orden;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 
 @Component
