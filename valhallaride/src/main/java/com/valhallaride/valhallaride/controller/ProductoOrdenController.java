@@ -72,6 +72,12 @@ public class ProductoOrdenController {
         return ResponseEntity.ok(lista); // Y si hay registros, devuelve la lista con 200 OK
     }
 
+    // Query 3 - 4 tablas
+    @GetMapping("/producto-usuario")
+    public List<Object[]> getProductoOrdenConProductoYUsuario() {
+        return productoOrdenService.listarProductoOrdenConProductoYUsuario();
+    }
+
     @PostMapping
     @Operation(summary = "Crear relación producto-orden", description = "Crea una nueva relacion entre un producto y una orden")
     public ResponseEntity<ProductoOrden> registrar(@RequestBody ProductoOrden productoOrden) {
