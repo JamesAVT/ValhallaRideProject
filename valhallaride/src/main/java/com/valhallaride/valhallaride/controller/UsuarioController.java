@@ -76,6 +76,7 @@ public class UsuarioController {
 
     // Query 4 Usuarios con su rol y total de órdenes realizadas
     @GetMapping("/usuarios-detallados")
+    @Operation(summary = "Usuarios con su rol y cantidad de ordenes", description = "Obtiene usuarios junto con su rol y número de órdenes realizadas")
     public ResponseEntity<List<Map<String, Object>>> obtenerUsuariosDetallados() {
         return ResponseEntity.ok(usuarioService.listarUsuariosConRolYOrdenes());
     }
