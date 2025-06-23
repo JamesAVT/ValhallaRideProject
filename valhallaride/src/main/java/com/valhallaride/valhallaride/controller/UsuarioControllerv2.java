@@ -2,6 +2,7 @@ package com.valhallaride.valhallaride.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
