@@ -141,6 +141,7 @@ public class ProductoController {
 
     // Query 1 - 3 tablas
     @GetMapping("/productos-detallados")
+    @Operation(summary = "Productos con nombre, categoria y tienda", description = "Obtiene una lista de productos con sus categorías y tiendas")
     public ResponseEntity<List<Map<String, Object>>> obtenerProductosDetallados() {
         return ResponseEntity.ok(productoService.listarProductosConNombres());
     }
