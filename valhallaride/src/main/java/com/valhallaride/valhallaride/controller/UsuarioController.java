@@ -75,10 +75,11 @@ public class UsuarioController {
     }
 
     // Query 4 Usuarios con su rol y total de órdenes realizadas
-    @GetMapping("/rol-total-ordenes")
-    public List<Object[]> getUsuariosConRolYTotalOrdenes() {
-        return usuarioService.listarUsuariosConRolYTotalOrdenes();
+    @GetMapping("/usuarios-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerUsuariosDetallados() {
+        return ResponseEntity.ok(usuarioService.listarUsuariosConRolYOrdenes());
     }
+
 
     @PostMapping
     @Operation(summary = "Crear Usuario", description = "Crea un nuevo usuario")
