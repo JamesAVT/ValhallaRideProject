@@ -19,7 +19,9 @@ public class CategoriaModelAssembler implements RepresentationModelAssembler<Cat
         return EntityModel.of(categoria, // Se crea el EntityModel
                 // Agrega un enlace self, apuntando al método que obtiene esta misma categoría por su ID
                 linkTo(methodOn(CategoriaControllerv2.class).getCategoriaById(Long.valueOf(categoria.getIdCategoria()))).withSelfRel(),
-                // Agrega un link con la relación de categorías, que apunta para listar todas las categorías
+                /* Agrega un link con la relación de categorías, que apunta al endpoint(URL que ofrece la API para realizar alguna operación)
+                   para listar todas las categorías
+                */ 
                 linkTo(methodOn(CategoriaControllerv2.class).getAllCategorias()).withRel("categorias"),
                 // Agrega un link para crear una categoría
                 linkTo(methodOn(CategoriaControllerv2.class).crearCategoria(categoria)).withRel("crar_categoria"),
