@@ -73,10 +73,11 @@ public class ProductoOrdenController {
     }
 
     // Query 3 - 4 tablas
-    @GetMapping("/producto-usuario")
-    public List<Object[]> getProductoOrdenConProductoYUsuario() {
-        return productoOrdenService.listarProductoOrdenConProductoYUsuario();
+    @GetMapping("/productos-orden-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerProductosOrdenDetallados() {
+        return ResponseEntity.ok(productoOrdenService.listarDetalleProductoOrden());
     }
+
 
     @PostMapping
     @Operation(summary = "Crear relación producto-orden", description = "Crea una nueva relacion entre un producto y una orden")
