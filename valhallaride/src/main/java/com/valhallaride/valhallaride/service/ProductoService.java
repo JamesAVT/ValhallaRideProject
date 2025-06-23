@@ -122,4 +122,21 @@ public class ProductoService {
     public List<Object[]> listarProductosConCategoriaYTienda() {
         return productoRepository.listarProductosConCategoriaYTienda();
     }
+
+
+    public List<Map<String, Object>> listarProductosConNombres() {
+    List<Object[]> resultados = productoRepository.listarProductosConCategoriaYTienda();
+    List<Map<String, Object>> lista = new ArrayList<>();
+
+    for (Object[] fila : resultados) {
+        Map<String, Object> datos = new LinkedHashMap<>();
+        datos.put("id_producto", fila[0]);
+        datos.put("nombre_producto", fila[1]);
+        datos.put("nombre_categoria", fila[2]);
+        datos.put("nombre_tienda", fila[3]);
+        lista.add(datos);
+    }
+
+    return lista;
+}
 }
