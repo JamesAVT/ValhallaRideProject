@@ -61,10 +61,12 @@ public class OrdenController {
     }
 
     // Query 2 - 3 tablas
-    @GetMapping("/usuario-metodo")
-    public List<Object[]> getOrdenesConUsuarioYMetodoPago() {
-        return ordenService.listarOrdenesConUsuarioYMetodoPago();
+
+    @GetMapping("/ordenes-detalladas")
+    public ResponseEntity<List<Map<String, Object>>> obtenerOrdenesDetalladas() {
+        return ResponseEntity.ok(ordenService.listarOrdenesDetalladas());
     }
+
 
     @PostMapping
     @Operation(summary = "Crear Orden", description = "Crea una orden")
