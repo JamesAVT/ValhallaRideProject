@@ -12,6 +12,8 @@ import com.valhallaride.valhallaride.assemblers.CategoriaModelAssembler;
 import com.valhallaride.valhallaride.model.Categoria;
 import com.valhallaride.valhallaride.service.CategoriaService;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +39,7 @@ public class CategoriaControllerv2 {
     private CategoriaModelAssembler assembler;
 
     @GetMapping(produces = MediaTypes.HAL_JSON_VALUE)   // Devuelve datos en formato HALJSON(HATEOAS)
+    @Operation(summary = "Obtener todas las categorias", description = "Obtiene una lista de todas las categorias")
     public CollectionModel<EntityModel<Categoria>> getAllCategorias(){
         List<EntityModel<Categoria>> categorias = categoriaService.findAll().stream()
                 .map(assembler::toModel)    // Aqui usa el assembler para tener cada categoria con los enlaces HATEOAS
@@ -47,12 +50,14 @@ public class CategoriaControllerv2 {
     }
 
     @GetMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(summary = "Obtener categorias por ID", description = "Obtiene categorias según su ID")
     public EntityModel<Categoria> getCategoriaById(@PathVariable Long id){
         Categoria categoria = categoriaService.findById(id); // Llama a service para obtener la categoria por un ID especifico
         return assembler.toModel(categoria); // Y aqui convierte la entidad categoria en un EntityModel con enlaces HATEOAS 
         }
     
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(summary = "Crear Categorias", description = "Permite crear categorias")
     public ResponseEntity<EntityModel<Categoria>> crearCategoria(@RequestBody Categoria categoria){
         Categoria nuevCategoria = categoriaService.save(categoria);
         return ResponseEntity // .created indica que se creo un nuevo recurso
@@ -61,6 +66,7 @@ public class CategoriaControllerv2 {
         }
     
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(summary = "Actualizar Categoria por su ID", description = "Actualiza los datos de una categoria ya existente")
     public ResponseEntity<EntityModel<Categoria>> actualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria){
         categoria.setIdCategoria(id.intValue()); // Establece el ID con el objeto categoria recibido, conviertiendo el Long a int, asegurando que el objeto tenga el ID correcto antes de guardarlo
         Categoria categoriaActualizada = categoriaService.save(categoria); // Aqui llama al service para guardar (actualizar) la categoria con el nuevo contenido
@@ -69,6 +75,7 @@ public class CategoriaControllerv2 {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
+    @Operation(summary = "Actualizar parcialmente Categoria por su ID", description = "Permite actualizar parcialmente los datos de una categoria existente")
     public ResponseEntity<?> eliminarCategoria(@PathVariable Long id){
         categoriaService.delete(id);    
         return ResponseEntity.noContent().build();
