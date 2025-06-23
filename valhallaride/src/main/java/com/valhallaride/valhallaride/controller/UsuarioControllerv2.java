@@ -50,6 +50,12 @@ public class UsuarioControllerv2 {
         return assembler.toModel(usuario); // Se convierte el Usuario en EntityModel, usando el assembler(agrega enlaces HATEOAS)
     }
 
+    // Query 4 Usuarios con su rol y total de órdenes realizadas
+    @GetMapping("/usuarios-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerUsuariosDetallados() {
+        return ResponseEntity.ok(usuarioService.listarUsuariosConRolYOrdenes());
+    }
+
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Usuario>> crearUsuario(@RequestBody Usuario usuario){
         Usuario nuevoUsuario = usuarioService.save(usuario); // Se guarda el nuevo usuario usando service
