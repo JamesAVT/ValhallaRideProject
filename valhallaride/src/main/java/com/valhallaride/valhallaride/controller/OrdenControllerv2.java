@@ -26,9 +26,11 @@ import com.valhallaride.valhallaride.model.Orden;
 import com.valhallaride.valhallaride.service.OrdenService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v2/ordenes")
+@Tag(name = "Ordenes", description = "Operaciones relacionadas con Ordenes")
 public class OrdenControllerv2 {
 
     @Autowired
