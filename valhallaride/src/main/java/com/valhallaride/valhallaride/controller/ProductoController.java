@@ -140,9 +140,9 @@ public class ProductoController {
     }
 
     // Query 1 - 3 tablas
-    @GetMapping("/categoria-tienda")
-    public List<Object[]> getProductosConCategoriaYTienda() {
-        return productoService.listarProductosConCategoriaYTienda();
+    @GetMapping("/productos-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerProductosDetallados() {
+        return ResponseEntity.ok(productoService.listarProductosConNombres());
     }
 
     @PostMapping
