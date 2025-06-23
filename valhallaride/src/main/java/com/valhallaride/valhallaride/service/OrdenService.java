@@ -40,9 +40,22 @@ public class OrdenService {
     }
 
     // Query 2 - 3 tablas
-    public List<Object[]> listarOrdenesConUsuarioYMetodoPago() {
-        return ordenRepository.listarOrdenesConUsuarioYMetodoPago();
+    public List<Map<String, Object>> listarOrdenesDetalladas() {
+    List<Object[]> resultados = ordenRepository.listarOrdenesConUsuarioYMetodoPago();
+    List<Map<String, Object>> lista = new ArrayList<>();
+
+    for (Object[] fila : resultados) {
+        Map<String, Object> datos = new LinkedHashMap<>();
+        datos.put("id_orden", fila[0]);
+        datos.put("fecha", fila[1]);
+        datos.put("nombre_usuario", fila[2]);
+        datos.put("metodo_pago", fila[3]);
+        lista.add(datos);
     }
+
+    return lista;
+    }
+
 
     public Orden save(Orden orden) {
         if (orden.getFecha() == null) {
