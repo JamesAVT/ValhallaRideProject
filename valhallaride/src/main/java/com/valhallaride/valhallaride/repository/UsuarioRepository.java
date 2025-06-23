@@ -14,11 +14,9 @@ public interface  UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol_idRol(Integer idRol); // Aqui buscamos todos los usuarios que tengan un rol específico (por el id de rol)
 
     // Query 4 - 3 tablas Usuarios con su rol y total de órdenes realizadas
-    @Query("SELECT u.nombreUsuario, r.nombreRol, COUNT(o) " +
-       "FROM Usuario u " +
-       "JOIN u.rol r " +
-       "LEFT JOIN u.ordenes o " +
-       "GROUP BY u.nombreUsuario, r.nombreRol")
-    List<Object[]> listarUsuariosConRolYTotalOrdenes();
+    @Query("SELECT u.idUsuario, u.nombreUsuario, r.nombreRol, COUNT(o) " +
+       "FROM Usuario u JOIN u.rol r LEFT JOIN u.ordenes o " +
+       "GROUP BY u.idUsuario, u.nombreUsuario, r.nombreRol")
+    List<Object[]> listarUsuariosConRolYCantidadOrdenes();
 
 }
