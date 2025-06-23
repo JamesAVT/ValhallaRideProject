@@ -51,8 +51,8 @@ public class ProductoOrdenControllerv2 {
 
     @GetMapping(value = "/por-orden/{idOrden}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Listar ProductoOrden por ID de la orden", description = "Muestra todas las relaciones producto-orden que pertenecen a una orden especifica por su ID")
-    public EntityModel<ProductoOrden> getProdOrdenById(@PathVariable Integer id){ // Metodo para obtener ProductoOrden por ID
-        ProductoOrden productoOrden = productoOrdenService.findById(id); // Busca el ProductoOrden en el service por el ID recibido
+    public EntityModel<ProductoOrden> getProdOrdenById(@PathVariable Integer idOrden){ // Metodo para obtener ProductoOrden por ID
+        ProductoOrden productoOrden = productoOrdenService.findById(idOrden); // Busca el ProductoOrden en el service por el ID recibido
         return assembler.toModel(productoOrden); // Devuelve el objeto encontrado
     }
 
