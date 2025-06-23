@@ -107,9 +107,14 @@ public class DataLoader implements CommandLineRunner{
 
     List<Producto> productos = productoRepository.findAll();
 
-    for(int i = 0; i < 3; i++){
+    List<String> metodos = new ArrayList<>(List.of(
+        "Credito", "Debito", "Efectivo"
+    ));
+
+    // metodos de pago
+    for(int i = 0; i < metodos.size(); i++){
         MetodoPago metodoPago = new MetodoPago();
-        metodoPago.setNomMetPago(faker.company().name());
+        metodoPago.setNomMetPago(metodos.get(i));
         metodoPagoRepository.save(metodoPago);
     }
     List<MetodoPago> metodosPagos = metodoPagoRepository.findAll(); 
