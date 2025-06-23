@@ -16,7 +16,7 @@ public class ProductoModelAssembler implements RepresentationModelAssembler <Pro
     @Override // Método que sobrescrobe el toModel()
     public EntityModel<Producto> toModel(Producto producto) { // Recibe un objeto producto y devuelve un EntityModel, con enlaces HATEOAS
             return EntityModel.of(producto, // Se crea un EntityModel que envuelve al producto
-            // Enlace al endpoit que devuelve este mismo producto por su ID
+            // Enlace al endpoit(URL que ofrece la API para realizar alguna operación) que devuelve este mismo producto por su ID
             linkTo(methodOn(ProductoControllerv2.class).getProductoById(producto.getIdProducto())).withSelfRel(),
             // Enlace que obtiene todos los productos
             linkTo(methodOn(ProductoControllerv2.class).getAllProductos()).withRel("productos"),
