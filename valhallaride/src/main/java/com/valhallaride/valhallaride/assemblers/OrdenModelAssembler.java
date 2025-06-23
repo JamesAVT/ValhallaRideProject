@@ -16,7 +16,7 @@ public class OrdenModelAssembler implements RepresentationModelAssembler<Orden, 
     
     @Override // Sobrescribe el método "toModel()"
     public EntityModel<Orden> toModel(Orden orden) { // Recibe una instancia de Orden y devuelve un EntityModel, que contiene enlaces HATEOAS
-            return EntityModel.of(orden, // Se crea un EntityModel que para el objeto orden, y se le agregan enlaces relacionados
+            return EntityModel.of(orden, // Se crea un EntityModel para el objeto orden, y se le agregan enlaces relacionados
                     // Enlace self, apunta al endpoint(URL que ofrece la API para realizar alguna operación) que devuelve esta orden según su ID            
                     linkTo(methodOn(OrdenControllerv2.class).getOrdenById(orden.getIdOrden())).withSelfRel(),
                     // Enlace que permite obtener todas las órdenes
