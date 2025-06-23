@@ -19,6 +19,7 @@ import com.valhallaride.valhallaride.model.Producto;
 import com.valhallaride.valhallaride.service.ProductoService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.Map;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v2/productos")
+@Tag(name = "Productos", description = "Operaciones relacionadas con Productos")
 public class ProductoControllerv2 {
 
     @Autowired
