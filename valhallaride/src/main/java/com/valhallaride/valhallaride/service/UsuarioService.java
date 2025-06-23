@@ -34,9 +34,22 @@ public class UsuarioService {
     }
 
     // Query 4  Usuarios con su rol y total de órdenes realizadas
-    public List<Object[]> listarUsuariosConRolYTotalOrdenes() {
-        return usuarioRepository.listarUsuariosConRolYTotalOrdenes();
+    public List<Map<String, Object>> listarUsuariosConRolYOrdenes() {
+    List<Object[]> resultados = usuarioRepository.listarUsuariosConRolYCantidadOrdenes();
+    List<Map<String, Object>> lista = new ArrayList<>();
+
+    for (Object[] fila : resultados) {
+        Map<String, Object> datos = new LinkedHashMap<>();
+        datos.put("id_usuario", fila[0]);
+        datos.put("nombre_usuario", fila[1]);
+        datos.put("rol", fila[2]);
+        datos.put("cantidad_ordenes", fila[3]);
+        lista.add(datos);
     }
+
+        return lista;
+    }
+
 
 
     public Usuario save(Usuario usuario){
