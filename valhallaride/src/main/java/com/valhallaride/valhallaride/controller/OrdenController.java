@@ -63,6 +63,7 @@ public class OrdenController {
     // Query 2 - 3 tablas
 
     @GetMapping("/ordenes-detalladas")
+    @Operation(summary = "Ordenes con método de pago, tienda y total productos", description = "Obtiene órdenes detalladas incluyendo método de pago, tienda y cantidad total de productos")
     public ResponseEntity<List<Map<String, Object>>> obtenerOrdenesDetalladas() {
         return ResponseEntity.ok(ordenService.listarOrdenesDetalladas());
     }
