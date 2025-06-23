@@ -51,6 +51,11 @@ public class OrdenControllerv2 {
         return assembler.toModel(orden); // Incluye enlaces como put, delete, etc.
         }
 
+    @GetMapping("/ordenes-detalladas")
+    public ResponseEntity<List<Map<String, Object>>> obtenerOrdenesDetalladas() {
+        return ResponseEntity.ok(ordenService.listarOrdenesDetalladas());
+    }
+    
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Orden>> crearOrden(@RequestBody Orden orden) {
         Orden nuevaOrden = ordenService.save(orden); // Guarda una orden usando service
