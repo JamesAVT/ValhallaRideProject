@@ -49,6 +49,12 @@ public class ProductoOrdenControllerv2 {
         return assembler.toModel(productoOrden); // Devuelve el objeto encontrado
     }
 
+     // Query 3 - 4 tablas
+    @GetMapping("/productos-orden-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerProductosOrdenDetallados() {
+        return ResponseEntity.ok(productoOrdenService.listarDetalleProductoOrden());
+    }
+
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<ProductoOrden>> crearProdOrden(@RequestBody ProductoOrden productoOrden){ // Método para crear un nuevo ProductoOrden
         ProductoOrden nuevoProdOrden = productoOrdenService.save(productoOrden); // Guarda el nuevo ProductoOrden en el service
