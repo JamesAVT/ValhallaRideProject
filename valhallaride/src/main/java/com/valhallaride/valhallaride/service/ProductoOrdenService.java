@@ -85,8 +85,21 @@ public class ProductoOrdenService {
     }
     
     // Query 3 - 4 tablas
-    public List<Object[]> listarProductoOrdenConProductoYUsuario() {
-        return productoOrdenRepository.listarProductoOrdenConProductoYUsuario();
+
+    public List<Map<String, Object>> listarDetalleProductoOrden() {
+    List<Object[]> resultados = productoOrdenRepository.listarDetalleProductoOrden();
+    List<Map<String, Object>> lista = new ArrayList<>();
+
+    for (Object[] fila : resultados) {
+        Map<String, Object> datos = new LinkedHashMap<>();
+        datos.put("id_producto_orden", fila[0]);
+        datos.put("nombre_producto", fila[1]);
+        datos.put("cantidad", fila[2]);
+        datos.put("nombre_usuario", fila[3]);
+        lista.add(datos);
+    }
+
+    return lista;
     }
 
     public void delete(Integer id) {
