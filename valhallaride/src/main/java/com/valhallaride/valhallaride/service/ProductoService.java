@@ -121,13 +121,9 @@ public class ProductoService {
     }
     
     // Query 1 - 3 tablas
-    public List<Object[]> listarProductosConCategoriaYTienda() {
-        return productoRepository.listarProductosConCategoriaYTienda();
-    }
-
 
     public List<Map<String, Object>> listarProductosConNombres() {
-    List<Object[]> resultados = productoRepository.listarProductosConCategoriaYTienda();
+    List<Object[]> resultados = productoRepository.productoService.listarProductosConNombres();
     List<Map<String, Object>> lista = new ArrayList<>();
 
     for (Object[] fila : resultados) {
