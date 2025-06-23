@@ -49,6 +49,13 @@ public class ProductoControllerv2 {
         return assembler.toModel(producto); // Devuelve el producto en un EntityModel (assembler), agregando enlaces HATEOAS (actualizar, eliminar, etc)
     }
 
+
+        // Query 1 - 3 tablas
+    @GetMapping("/productos-detallados")
+    public ResponseEntity<List<Map<String, Object>>> obtenerProductosDetallados() {
+        return ResponseEntity.ok(productoService.listarProductosConNombres());
+    }
+    
     @PostMapping(produces = MediaTypes.HAL_JSON_VALUE)
     public ResponseEntity<EntityModel<Producto>> crearProducto(@RequestBody Producto producto){
         Producto nuevoProducto = productoService.save(producto); // Guarda el nuevo producto 
