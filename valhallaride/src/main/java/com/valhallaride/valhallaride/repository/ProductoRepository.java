@@ -35,5 +35,8 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     @Query("SELECT p.idProducto, p.nombreProducto, c.nombreCategoria, t.nombreTienda " +
        "FROM Producto p JOIN p.categoria c JOIN p.tienda t")
     List<Object[]> listarProductosConCategoriaYTienda();
+    //
+    List<Producto> findByNombreProductoContainingIgnoreCaseAndTienda_IdTiendaAndCategoria_IdCategoria(String nombre, Long idTienda, Long idCategoria);
+
 
 }
