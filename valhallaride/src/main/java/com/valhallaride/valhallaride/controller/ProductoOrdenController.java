@@ -79,6 +79,17 @@ public class ProductoOrdenController {
         return ResponseEntity.ok(productoOrdenService.listarDetalleProductoOrden());
     }
 
+    @GetMapping("/producto/{pid}/orden/{oid}/cantidad-min/{cantidad}")
+    public ResponseEntity<List<ProductoOrden>> buscarPorProductoOrdenCantidad(
+            @PathVariable Integer pid,
+            @PathVariable Integer oid,
+            @PathVariable Integer cantidad) {
+        List<ProductoOrden> po = productoOrdenService.buscarPorProductoOrdenCantidad(pid, oid, cantidad);
+        if (po.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(po);
+    }
+
 
     @PostMapping
     @Operation(summary = "Crear relación producto-orden", description = "Crea una nueva relacion entre un producto y una orden")
