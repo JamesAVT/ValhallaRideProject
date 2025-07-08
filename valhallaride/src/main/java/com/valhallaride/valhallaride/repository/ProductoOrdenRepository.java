@@ -29,5 +29,7 @@ public interface ProductoOrdenRepository extends JpaRepository<ProductoOrden, In
     @Query("SELECT po.idProductoOrden, p.nombreProducto, po.cantidad, u.nombreUsuario " +
        "FROM ProductoOrden po JOIN po.producto p JOIN po.orden o JOIN o.usuario u")
     List<Object[]> listarDetalleProductoOrden();
+    // 
+    List<ProductoOrden> findByProducto_IdProductoAndOrden_IdOrdenAndCantidadGreaterThanEqual(Integer idProducto, Integer idOrden, Integer cantidad);
 
 }
