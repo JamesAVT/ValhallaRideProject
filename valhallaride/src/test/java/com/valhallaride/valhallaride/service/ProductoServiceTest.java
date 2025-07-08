@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,8 +85,17 @@ public class ProductoServiceTest {
 
     @Test
     public void testDeleteById() {
-        doNothing().when(productoRepository).deleteById(1);
-        productoService.delete(1);
-        verify(productoRepository, times(1)).deleteById(1);
+        Producto producto = createProducto();
+
+        // Simula que al buscar por ID, encuentra el producto
+        when(productoRepository.findById(1)).thenReturn(Optional.of(producto));
+        // Simula que al eliminar por ID, no pasa nada (osea, éxito)
+        doNothing().when(productoRepository).delete(producto);
+
+        productoService.delete(1); // Llama al método a probar
+
+        // Aquí verifica que se llamó a findById y delete correctamente
+        verify(productoRepository, times(1)).findById(1);
+        verify(productoRepository, times(1)).delete(producto);
     }
 }
