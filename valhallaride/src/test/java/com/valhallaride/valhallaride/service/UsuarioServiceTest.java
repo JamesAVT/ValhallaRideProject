@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,8 +84,17 @@ public class UsuarioServiceTest {
 
     @Test
     public void testDeleteById() {
-        doNothing().when(usuarioRepository).deleteById(1L);
-        usuarioService.delete(1L);
-        verify(usuarioRepository, times(1)).deleteById(1L);
+        Usuario usuario = createUsuario();
+
+        // Simula que al buscar por ID, encuentra el usuario
+        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        // Simula que al eliminar por ID, no pasa nada (osea, éxito)
+        doNothing().when(usuarioRepository).delete(usuario);
+
+        usuarioService.delete(1L); // Llama al método a probar
+
+        // Aquí verifica que se llamó a findById y delete correctamente
+        verify(usuarioRepository, times(1)).findById(1L);
+        verify(usuarioRepository, times(1)).delete(usuario);
     }
 }
