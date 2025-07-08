@@ -24,6 +24,6 @@ public interface OrdenRepository extends JpaRepository<Orden, Integer> {
     @Query("SELECT o.idOrden, o.fecha, u.nombreUsuario, m.nomMetPago " +
        "FROM Orden o JOIN o.usuario u JOIN o.metodoPago m")
     List<Object[]> listarOrdenesConUsuarioYMetodoPago();
-
-
+    //
+    List<Orden> findByUsuario_IdUsuarioAndMetodoPago_IdMetPagoAndPagado(Long idUsuario, Long idMetPago, Boolean pagado);
 }
