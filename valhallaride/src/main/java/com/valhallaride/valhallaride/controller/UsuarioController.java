@@ -80,6 +80,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.listarUsuariosConRolYOrdenes());
     }
 
+    @GetMapping("/nombre/{nombre}/rol/{rid}")
+    public ResponseEntity<List<Usuario>> buscarUsuariosPorNombreYRol(
+            @PathVariable String nombre,
+            @PathVariable Integer rid) {
+        List<Usuario> usuarios = usuarioService.buscarPorNombreYRol(nombre, rid);
+        if (usuarios.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(usuarios);
+    }
 
     @PostMapping
     @Operation(summary = "Crear Usuario", description = "Crea un nuevo usuario")
