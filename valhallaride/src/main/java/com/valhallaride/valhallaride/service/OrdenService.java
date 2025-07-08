@@ -58,6 +58,11 @@ public class OrdenService {
     return lista;
     }
 
+    public List<ProductoOrden> buscarPorProductoOrdenCantidad(Integer idProducto, Integer idOrden, Integer cantidad) {
+        return productoOrdenRepository.findByProducto_IdProductoAndOrden_IdOrdenAndCantidadGreaterThanEqual(idProducto,
+                idOrden, cantidad);
+    }
+
 
     public Orden save(Orden orden) {
         if (orden.getFecha() == null) {
