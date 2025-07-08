@@ -146,6 +146,17 @@ public class ProductoController {
         return ResponseEntity.ok(productoService.listarProductosConNombres());
     }
 
+    @GetMapping("/nombre/{nombre}/tienda/{tid}/categoria/{cid}")
+    public ResponseEntity<List<Producto>> buscarProductosPorNombreTiendaCategoria(
+            @PathVariable String nombre,
+            @PathVariable Long tid,
+            @PathVariable Long cid) {
+        List<Producto> productos = productoService.buscarPorNombreTiendaCategoria(nombre, tid, cid);
+        if (productos.isEmpty())
+            return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(productos);
+    }
+
     @PostMapping
     @Operation(summary = "Crear Producto", description = "Crea un nuevo producto")
     public ResponseEntity<Producto> guardar(@RequestBody Producto producto) { // Método que recibe un producto en formato JSON desde el @RequestBody y lo convierte a un objeto Producto
