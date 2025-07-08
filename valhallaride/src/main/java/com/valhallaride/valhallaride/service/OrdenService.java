@@ -128,4 +128,8 @@ public class OrdenService {
             return null;
         }
     }
+    
+    public List<Orden> findByUsuarioMetodoPagoEstado(Long idUsuario, Long idMetPago, Boolean pagado) {
+        return ordenRepository.findByUsuario_IdUsuarioAndMetodoPago_IdMetPagoAndPagado(idUsuario, idMetPago, pagado);
+    }
 }
