@@ -104,6 +104,11 @@ public class ProductoOrdenService {
     return lista;
     }
 
+    public List<ProductoOrden> buscarPorProductoOrdenCantidad(Integer idProducto, Integer idOrden, Integer cantidad) {
+        return productoOrdenRepository.findByProducto_IdProductoAndOrden_IdOrdenAndCantidadGreaterThanEqual(idProducto,
+                idOrden, cantidad);
+    }
+
     public void delete(Integer id) {
         ProductoOrden productoOrden = productoOrdenRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("Producto Orden no encontrada")); 
