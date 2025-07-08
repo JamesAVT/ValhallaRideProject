@@ -71,7 +71,7 @@ public class CategoriaControllerv2 {
     @PutMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
     @Operation(summary = "Actualizar Categoria por su ID", description = "Actualiza los datos de una categoria ya existente")
     public ResponseEntity<EntityModel<Categoria>> actualizarCategoria(@PathVariable Long id, @RequestBody Categoria categoria){
-        categoria.setIdCategoria(id.intValue()); // Establece el ID con el objeto categoria recibido, conviertiendo el Long a int, asegurando que el objeto tenga el ID correcto antes de guardarlo
+        categoria.setIdCategoria(id); // Establece el ID con el objeto categoria recibido, conviertiendo el Long a int, asegurando que el objeto tenga el ID correcto antes de guardarlo
         Categoria categoriaActualizada = categoriaService.save(categoria); // Aqui llama al service para guardar (actualizar) la categoria con el nuevo contenido
         return ResponseEntity 
                 .ok(assembler.toModel(categoriaActualizada)); // Devuelve una respuesta HTTP 200 OK con el cuerpo que incluye la categoria actualizada
