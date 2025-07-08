@@ -52,6 +52,9 @@ public class UsuarioService {
         return lista;
     }
 
+     public List<Usuario> buscarPorNombreYRol(String nombre, Integer idRol) {
+        return usuarioRepository.findByNombreUsuarioContainingIgnoreCaseAndRol_IdRol(nombre, idRol);
+    }
 
 
     public Usuario save(Usuario usuario){
