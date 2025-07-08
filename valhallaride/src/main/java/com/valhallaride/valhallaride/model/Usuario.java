@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // Evita errores por propiedades de Hibernate (serialización de propiedas internas) 
 @Entity
 @Table(name = "usuario")
 @Data
@@ -37,15 +37,15 @@ public class Usuario {
     private String nombreUsuario;
 
     @Column(unique = true, length = 50, nullable = false)
-    @JsonIgnore
+    @JsonIgnore     // Rompe bucles
     private String correoUsuario;
 
     @Column(length = 30, nullable = false)
-    @JsonIgnore
+    @JsonIgnore     // Rompe bucles
     String contrasena;
 
     @OneToMany(mappedBy = "usuario")
-    @JsonIgnore
+    @JsonIgnore     // Rompe bucles
     private List<Orden> ordenes;
 
     @ManyToOne
