@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CategoriaServiceTest {
 
     private Categoria createCategoria() {
         return new Categoria(
-            1, 
+            1L, 
             "Motocross", 
             new ArrayList<>()   // Creamos una lista vacia de List<Producto>, evitando asi que quede null
         );
@@ -81,9 +82,18 @@ public class CategoriaServiceTest {
 
     @Test
     public void testDeleteById() { // Verifica que la eliminación de una categoría por su id se realice correctamente
-        doNothing().when(categoriaRepository).deleteById(1L); // Simula la eliminación de la categoría con id 1
-        categoriaService.delete(1L);
-        verify(categoriaRepository, times(1)).deleteById(1L); // Verifica que el método deleteById se haya llamado una vez
+        Categoria categoria = createCategoria();
+
+        // Simula que al buscar por ID, encuentra la categoria
+        when(categoriaRepository.findById(1L)).thenReturn(Optional.of(categoria));
+        // Simula que al eliminar por ID, no pasa nada (osea, éxito)
+        doNothing().when(categoriaRepository).delete(categoria);
+
+        categoriaService.delete(1L); // Llama al método a probar
+
+        // Aquí verifica que se llamó a findById y delete correctamente
+        verify(categoriaRepository, times(1)).findById(1L);
+        verify(categoriaRepository, times(1)).delete(categoria);
     }
 
 }
