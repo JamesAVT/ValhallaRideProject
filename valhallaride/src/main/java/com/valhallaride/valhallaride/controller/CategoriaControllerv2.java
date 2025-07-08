@@ -78,7 +78,7 @@ public class CategoriaControllerv2 {
     }
 
     @DeleteMapping(value = "/{id}", produces = MediaTypes.HAL_JSON_VALUE)
-    @Operation(summary = "Actualizar parcialmente Categoria por su ID", description = "Permite actualizar parcialmente los datos de una categoria existente")
+    @Operation(summary = "Eliminar Categoria por su ID", description = "Elimina una categoria existente")
     public ResponseEntity<?> eliminarCategoria(@PathVariable Long id){
         categoriaService.delete(id);    
         return ResponseEntity.noContent().build();
