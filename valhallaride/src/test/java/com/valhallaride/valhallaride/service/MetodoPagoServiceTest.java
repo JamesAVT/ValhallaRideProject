@@ -9,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class MetodoPagoServiceTest {
     private MetodoPagoRepository metodoPagoRepository;
 
     private MetodoPago createMetodoPago() {
-        return new MetodoPago(1, "Debito");
+        return new MetodoPago(1L, "Debito");
     }
 
     @Test
@@ -74,8 +75,17 @@ public class MetodoPagoServiceTest {
 
     @Test
     public void testDeleteById() {
-        doNothing().when(metodoPagoRepository).deleteById(1L);
-        metodoPagoService.delete(1L);
-        verify(metodoPagoRepository, times(1)).deleteById(1L);
+        MetodoPago metodoPago = createMetodoPago();
+
+        // Simula que al buscar por ID, encuentra la categoria
+        when(metodoPagoRepository.findById(1L)).thenReturn(Optional.of(metodoPago));
+        // Simula que al eliminar por ID, no pasa nada (osea, éxito)
+        doNothing().when(metodoPagoRepository).delete(metodoPago);
+
+        metodoPagoService.delete(1L); // Llama al método a probar
+
+        // Aquí verifica que se llamó a findById y delete correctamente
+        verify(metodoPagoRepository, times(1)).findById(1L);
+        verify(metodoPagoRepository, times(1)).delete(metodoPago);
     }
 }
