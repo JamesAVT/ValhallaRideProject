@@ -18,5 +18,6 @@ public interface  UsuarioRepository extends JpaRepository<Usuario, Long> {
        "FROM Usuario u JOIN u.rol r LEFT JOIN u.ordenes o " +
        "GROUP BY u.idUsuario, u.nombreUsuario, r.nombreRol")
     List<Object[]> listarUsuariosConRolYCantidadOrdenes();
-
+    //
+    List<Usuario> findByNombreUsuarioContainingIgnoreCaseAndRol_IdRol(String nombre, Integer idRol);
 }
