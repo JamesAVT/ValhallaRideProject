@@ -137,4 +137,9 @@ public class ProductoService {
 
     return lista;
 }
+    public List<Producto> buscarPorNombreTiendaCategoria(String nombre, Long idTienda, Long idCategoria) {
+        return productoRepository.findByNombreProductoContainingIgnoreCaseAndTienda_IdTiendaAndCategoria_IdCategoria(
+                nombre, idTienda, idCategoria);
+    }
+    
 }
