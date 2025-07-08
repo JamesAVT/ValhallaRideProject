@@ -24,7 +24,7 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idCategoria;
+    private Long idCategoria;
 
     @Column(length = 30, nullable = false)
     private String nombreCategoria;
@@ -33,4 +33,5 @@ public class Categoria {
     @JsonIgnore
     private List<Producto> productos;
 }
+
 
