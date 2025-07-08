@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class MetodoPago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idMetPago;
+    private Long idMetPago;
 
     @Column(nullable = false)
     private String nomMetPago;
