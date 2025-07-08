@@ -68,7 +68,22 @@ public class OrdenController {
         return ResponseEntity.ok(ordenService.listarOrdenesDetalladas());
     }
 
+    @GetMapping("/usuario/{uid}/metodo/{mid}/pagado/{estado}")
+    @Operation(summary = "Buscar órdenes por usuario, método de pago y estado de pago")
+    public ResponseEntity<List<Orden>> buscarOrdenesPorUsuarioMetodoEstado(
+            @PathVariable Long uid,
+            @PathVariable Long mid,
+            @PathVariable Boolean estado) {
 
+        List<Orden> ordenes = ordenService.findByUsuarioMetodoPagoEstado(uid, mid, estado);
+
+        if (ordenes.isEmpty())
+            return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(ordenes);
+    }
+
+    
     @PostMapping
     @Operation(summary = "Crear Orden", description = "Crea una orden")
     public ResponseEntity<Orden> registrar(@RequestBody Orden orden) {
